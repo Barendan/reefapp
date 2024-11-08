@@ -1,5 +1,5 @@
 const express = require('express');
-const pool = require('../db');
+const pool = require('../config/db');
 const { check, validationResult } = require('express-validator');
 require('dotenv').config();
 
@@ -52,6 +52,7 @@ router.post('/register', [
         console.log(err.message);
         res.status(500).send('Server error');
     }
+    
 });
 
 
@@ -90,6 +91,7 @@ router.post('/login', [
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 });
 
 
