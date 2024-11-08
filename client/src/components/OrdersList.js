@@ -7,10 +7,10 @@ import { AppContext } from '../AppContext';
 const OrdersList = () => {
     const { orders, fetchOrders, updateOrderStatus } = useContext(AppContext);
         
-    
+
     useEffect(() => {
         
-        fetchOrders();
+        fetchOrders()
 
     }, []); 
 

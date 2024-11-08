@@ -1,4 +1,4 @@
-import React, { useState, createContext, } from 'react';
+import React, { useState, createContext } from 'react';
 import axios from './utils/axios';
 
 export const AppContext = createContext();
