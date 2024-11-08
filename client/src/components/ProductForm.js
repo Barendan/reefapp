@@ -17,6 +17,7 @@ const validationSchema = Yup.object({
 const ProductForm = () => {
     const { products, createProduct, updateProduct } = useContext(AppContext);
     
+    const [successMessage, setSuccessMessage] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -52,18 +53,29 @@ const ProductForm = () => {
 
         if (id) {
             updateProduct(id, values);
+            setSuccessMessage('Product Updated! Redirecting to Products...');
         } else {
             createProduct(values);
+            setSuccessMessage('Product Created! Redirecting to Products...');
         }
 
-        
-        navigate('/products');
+
+        setTimeout(() => {
+            navigate('/products');
+        }, 2000)
     };
 
 
     return (
-        <div>
-            <h2>{id ? 'Update Product' : 'Create Product'}</h2>
+        <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">{id ? 'Update Product' : 'Create Product'}</h2>
+
+            {successMessage && (
+                <div className="bg-green-500 text-white py-2 px-4 mb-6 rounded-md">
+                    {successMessage}
+                </div>
+            )}
+
 
             <Formik
                 enableReinitialize
@@ -72,28 +84,59 @@ const ProductForm = () => {
                 onSubmit={onSubmit}
             >
 
-                <Form>
-                    <div>
-                        <label>Name</label>
-                        <Field type="text" name="name" />
-                        <ErrorMessage name="name" component="div" />
-                    </div>
-                    <div>
-                        <label>Description</label>
-                        <Field type="text" name="description" />
-                    </div>
-                    <div>
-                        <label>Price</label>
-                        <Field type="number" name="price" />
-                        <ErrorMessage name="price" component="div" />
-                    </div>
-                    <div>
-                        <label>Image URL</label>
-                        <Field type="url" name="image_url" />
-                        <ErrorMessage name="image_url" component="div" />
+                <Form className="space-y-4">
+                    <div className="flex flex-col">
+                        <label htmlFor="name" className="font-medium text-gray-700 mb-2">Name</label>
+                        <Field 
+                            id="name"
+                            type="text" 
+                            name="name" 
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
                     </div>
 
-                    <button type="submit">{id ? 'Update Product' : 'Create Product'}</button>
+                    <div className="flex flex-col">
+                        <label htmlFor="description" className="font-medium text-gray-700 mb-2">Description</label>
+                        <Field 
+                            id="description"
+                            type="text" 
+                            name="description" 
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="price" className="font-medium text-gray-700 mb-2">Price</label>
+                        <Field 
+                            id="price"
+                            type="number" 
+                            name="price" 
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="image_url" className="font-medium text-gray-700 mb-2">Image URL</label>
+                        <Field 
+                            id="image_url"
+                            type="url" 
+                            name="image_url" 
+                            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <ErrorMessage name="image_url" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+
+                    <button 
+                        type="submit" 
+                        className="w-full py-2 px-4 mt-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {id ? 'Update Product' : 'Create Product'}
+                    </button>
+
                 </Form>
 
             </Formik>

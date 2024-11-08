@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import { Link } from 'react-router-dom';
 
 import { AppContext } from '../AppContext';
@@ -6,7 +6,7 @@ import { AppContext } from '../AppContext';
 
 const OrdersList = () => {
     const { orders, fetchOrders, updateOrderStatus } = useContext(AppContext);
-        
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         
@@ -17,51 +17,61 @@ const OrdersList = () => {
 
     const handleStatusChange = (orderId, newStatus) => {
         updateOrderStatus(orderId, newStatus);
+
+        setSuccessMessage('Order status updated successfully!');
+
+        setTimeout(() => {
+            setSuccessMessage('');
+        }, 3000);
     };
     
 
     return (
-        <div>
-            <h2>Orders List</h2>
+        <div className="max-w-6xl mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Orders List</h2>
 
-            <table>
+            {successMessage && (
+                <div className="bg-green-500 text-white py-2 px-4 mb-6 rounded-md">
+                    {successMessage}
+                </div>
+            )}
+
+
+            <table className="min-w-full table-auto">
+
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Order Date</th>
-                        <th>Status</th>
+                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 bg-gray-200">Order ID</th>
+                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 bg-gray-200">Customer Name</th>
+                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 bg-gray-200">Order Date</th>
+                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-700 bg-gray-200">Status</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {orders.map(order => (
-                        
-                        <tr key={order.id}>
-
-                            <td>{order.id}</td>
-                            <td>{order.customer_name}</td>
-                            <td>{new Date(order.order_date).toLocaleDateString()}</td>
-
-                            <td>
-                                <select 
-                                    value={order.status} 
+                        <tr key={order.id} className="hover:bg-gray-100">
+                            <td className="px-4 py-2 text-sm text-gray-700">{order.id}</td>
+                            <td className="px-4 py-2 text-sm text-gray-700">{order.customer_name}</td>
+                            <td className="px-4 py-2 text-sm text-gray-700">{new Date(order.order_date).toLocaleDateString()}</td>
+                            
+                            <td className="px-4 py-2 text-sm text-gray-700">
+                                <select
+                                    value={order.status}
                                     onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                 >
                                     <option value="pending">Pending</option>
                                     <option value="preparing">Preparing</option>
                                     <option value="enroute">En-route</option>
                                     <option value="delivered">Delivered</option>
                                 </select>
-                                
-                                {/* <Link to={`/order/edit/${order.id}`}>Edit</Link> */}
                             </td>
-
+                            
                         </tr>
-                    
                     ))}
                 </tbody>
-
+                
             </table>
 
         </div>
