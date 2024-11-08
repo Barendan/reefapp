@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../db');
 const { check, validationResult } = require('express-validator');
+const authMiddleware = require('../auth');
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/', async (req, res) => {
 
 
 // Create a new order
-router.post('/', [
+router.post('/', authMiddleware, [
     check('customer_name', 'Customer name is required').not().isEmpty(),
     check('status', 'Status is required').optional().isIn(['pending', 'preparing', 'enroute', 'delivered'])
 ], async (req, res) => {
@@ -51,13 +52,30 @@ router.post('/', [
 });
 
 
-// Get order by id
-
-
 // Update order by id
+router.put('/:id', authMiddleware, async (req, res) => {
+    const { status } = req.body;
 
 
-// Delete order by id
+    try {
+        const updatedOrder = await pool.query(
+            'UPDATE orders SET status = $1 WHERE id = $2 RETURNING *',
+            [status, req.params.id]
+        );
+
+
+        if (updatedOrder.rows.length === 0) {
+            return res.status(404).json({ msg: 'Order not found' });
+        }
+
+
+        res.json(updatedOrder.rows[0]);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server error');
+    }
+
+});
 
 
 
