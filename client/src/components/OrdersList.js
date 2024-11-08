@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from 'react';
+// import { Link } from 'react-router-dom';
+
 import { AppContext } from '../AppContext';
 
 
-
 const OrdersList = () => {
-    const { orders, fetchOrders } = useContext(AppContext);
+    const { orders, fetchOrders, updateOrderStatus } = useContext(AppContext);
         
+    
     useEffect(() => {
         
         fetchOrders();
@@ -13,6 +15,10 @@ const OrdersList = () => {
     }, []); 
 
 
+    const handleStatusChange = (orderId, newStatus) => {
+        updateOrderStatus(orderId, newStatus);
+    };
+    
 
     return (
         <div>
@@ -25,7 +31,6 @@ const OrdersList = () => {
                         <th>Customer Name</th>
                         <th>Order Date</th>
                         <th>Status</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
 
@@ -33,12 +38,25 @@ const OrdersList = () => {
                     {orders.map(order => (
                         
                         <tr key={order.id}>
+
                             <td>{order.id}</td>
                             <td>{order.customer_name}</td>
                             <td>{new Date(order.order_date).toLocaleDateString()}</td>
+
                             <td>
-                                {order.status} 
+                                <select 
+                                    value={order.status} 
+                                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                >
+                                    <option value="pending">Pending</option>
+                                    <option value="preparing">Preparing</option>
+                                    <option value="enroute">En-route</option>
+                                    <option value="delivered">Delivered</option>
+                                </select>
+                                
+                                {/* <Link to={`/order/edit/${order.id}`}>Edit</Link> */}
                             </td>
+
                         </tr>
                     
                     ))}
