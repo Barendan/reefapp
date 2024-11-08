@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from '../../utils/axios';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -19,8 +20,16 @@ const RegisterForm = () => {
     }
 
 
-    const handleSubmit = () => {
-        console.log('submit clicked')
+    const handleSubmit = async (values, {setSubmitting}) => {
+
+        try {
+            const response = await axios.post('/api/auth/register', values);
+            console.log('Registration successful', response.data);
+        } catch (err) {
+            console.log('Registration error:', err.response.data);
+        }
+
+        setSubmitting(false);
     };
 
 
@@ -47,7 +56,7 @@ const RegisterForm = () => {
                     <Field type="password" name="password" />
                     <ErrorMessage name="password" component="div" />
                 </div>
-                
+
                 <button type="submit">Register</button>
             </Form>
 

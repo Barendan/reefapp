@@ -24,7 +24,7 @@ const LoginForm = () => {
 
     return (
         <Formik 
-            initialValues={formData} 
+            initialValues={formData}
             validationSchema={validationSchema} 
             onSubmit={handleSubmit}
         >
