@@ -1,8 +1,11 @@
 import React from 'react';
-import axios from '../../utils/axios';
+import axios from '../utils/axios';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+
+import { useNavigate } from 'react-router-dom';
+
 
 
 const validationSchema = Yup.object({
@@ -19,12 +22,16 @@ const RegisterForm = () => {
         password: '',
     }
 
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (values, {setSubmitting}) => {
 
         try {
             const response = await axios.post('/api/auth/register', values);
             console.log('Registration successful', response.data);
+
+            navigate('/login')
         } catch (err) {
             console.log('Registration error:', err.response.data);
         }
@@ -39,26 +46,29 @@ const RegisterForm = () => {
             validationSchema={validationSchema} 
             onSubmit={handleSubmit}
         >
-            
-            <Form>
-                <div>
-                    <label>Name:</label>
-                    <Field type="text" name="name" />
-                    <ErrorMessage name="name" component="div" />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <Field type="email" name="email" />
-                    <ErrorMessage name="email" component="div" />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <Field type="password" name="password" />
-                    <ErrorMessage name="password" component="div" />
-                </div>
+            {({ isSubmitting }) => (
+                <Form>
+                    <div>
+                        <label>Name:</label>
+                        <Field type="text" name="name" />
+                        <ErrorMessage name="name" component="div" />
+                    </div>
 
-                <button type="submit">Register</button>
-            </Form>
+                    <div>
+                        <label>Email:</label>
+                        <Field type="email" name="email" />
+                        <ErrorMessage name="email" component="div" />
+                    </div>
+                    
+                    <div>
+                        <label>Password:</label>
+                        <Field type="password" name="password" />
+                        <ErrorMessage name="password" component="div" />
+                    </div>
+
+                    <button type="submit" disabled={isSubmitting}>Register</button>
+                </Form>
+            )}
 
         </Formik>
     );
