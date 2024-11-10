@@ -22,8 +22,8 @@ const OrderForm = () => {
     const [formData, setFormData] = useState({
         customer_name: '',
         status: '',
-        order_date: '', // make non-editable
-        order_id: ''  // make non-editable
+        order_date: '', // non-editable
+        order_id: ''  // non-editable
     });
 
 

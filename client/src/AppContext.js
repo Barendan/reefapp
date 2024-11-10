@@ -30,22 +30,22 @@ export const ContextProvider = ({ children }) => {
             const response = await axios.post('/api/orders', orderData);
 
             setOrders([...orders, response.data]);
-        } catch (error) {
-            console.log('Error creating order:', error);
+        } catch (err) {
+            console.log('Error creating order:', err);
         }
         
     };
 
 
     // Update order status
-    const updateOrderStatus = async (orderId, status) => {
+    const updateOrderStatus = async (order_id, status) => {
 
         try {
-            await axios.put(`/api/orders/${orderId}`, { status });
+            await axios.put(`/api/orders/${order_id}`, { status });
 
-            setOrders(orders.map(order => order.id === orderId ? { ...order, status } : order));
-        } catch (error) {
-            console.log('Error updating order status:', error);
+            setOrders(orders.map(order => order.order_id === order_id ? { ...order, status } : order));
+        } catch (err) {
+            console.log('Error updating order status:', err);
         }
 
     };
@@ -73,8 +73,8 @@ export const ContextProvider = ({ children }) => {
             const response = await axios.post('/api/products', productData);
 
             setProducts([...products, response.data]);
-        } catch (error) {
-            console.log('Error creating product:', error);
+        } catch (err) {
+            console.log('Error creating product:', err);
         }
 
     };
