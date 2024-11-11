@@ -11,23 +11,24 @@ const products = [
 module.exports = {
   up: async () => {
     try {
-      // Clear existing product data (optional)
       await Product.destroy({ where: {} });
 
       // Insert new products
       await Product.bulkCreate(products);
       console.log('Products seeded successfully!');
     } catch (err) {
+      
       console.error('Error seeding products:', err);
     }
   },
 
   down: async () => {
     try {
-      // Optionally, remove all products when rolling back
       await Product.destroy({ where: {} });
+      
       console.log('Products removed successfully!');
     } catch (err) {
+
       console.error('Error removing products:', err);
     }
   }
