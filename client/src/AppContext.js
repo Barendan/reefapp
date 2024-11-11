@@ -43,7 +43,7 @@ export const ContextProvider = ({ children }) => {
         try {
             await axios.put(`/api/orders/${order_id}`, { status });
 
-            setOrders(orders.map(order => order.order_id === order_id ? { ...order, status } : order));
+            setOrders(orders.map(order => order.id === order_id ? { ...order, status } : order));
         } catch (err) {
             console.log('Error updating order status:', err);
         }

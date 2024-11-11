@@ -51,15 +51,15 @@ const OrdersList = () => {
 
                     <tbody>
                         {orders.map(order => (
-                            <tr key={order.order_id} className="hover:bg-gray-100">
-                                <td className="px-4 py-2 text-sm text-gray-700">{order.order_id}</td>
+                            <tr key={order.id} className="hover:bg-gray-100">
+                                <td className="px-4 py-2 text-sm text-gray-700">{order.id}</td>
                                 <td className="px-4 py-2 text-sm text-gray-700">{order.customer_name}</td>
                                 <td className="px-4 py-2 text-sm text-gray-700">{new Date(order.order_date).toLocaleDateString()}</td>
                                 
                                 <td className="px-4 py-2 text-sm text-gray-700">
                                     <select
                                         value={order.status}
-                                        onChange={(e) => handleStatusChange(order.order_id, e.target.value)}
+                                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                     >
                                         <option value="pending">Pending</option>
