@@ -8,7 +8,6 @@ const {
 } = require('../services/productService.js');
 
 
-
 const handleValidationErrors = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -19,18 +18,23 @@ const handleValidationErrors = (req, res) => {
 
 // fetch products
 const fetchProductsHandler = async (req, res) => {
+
     try {
         const products = await fetchProducts();
+
         res.json(products);
     } catch (err) {
+
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 };
 
 
 // fetch single product
 const fetchProductByIdHandler = async (req, res) => {
+
     try {
         const product = await fetchProductById(req.params.id);
 
@@ -40,28 +44,35 @@ const fetchProductByIdHandler = async (req, res) => {
 
         res.json(product);
     } catch (err) {
+
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 };
 
 
 // create product
 const createProductHandler = async (req, res) => {
+
     handleValidationErrors(req, res);
 
     try {
         const newProduct = await createProduct(req.body);
+
         res.json(newProduct);
     } catch (err) {
+
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 };
 
 
 // update product
 const updateProductHandler = async (req, res) => {
+
     try {
         const updatedProduct = await updateProduct(req.params.id, req.body);
 
@@ -71,14 +82,17 @@ const updateProductHandler = async (req, res) => {
 
         res.json(updatedProduct);
     } catch (err) {
+
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 };
 
 
 // delete product
 const deleteProductHandler = async (req, res) => {
+
     try {
         const deleted = await removeProduct(req.params.id);
 
@@ -88,9 +102,11 @@ const deleteProductHandler = async (req, res) => {
 
         res.json({ msg: 'Product deleted' });
     } catch (err) {
+        
         console.log(err.message);
         res.status(500).send('Server error');
     }
+
 };
 
 module.exports = { 

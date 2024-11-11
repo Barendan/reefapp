@@ -3,51 +3,51 @@ const { registerUser, loginUser, generateToken } = require('../services/authServ
 
 
 const handleValidationErrors = (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 };
 
 
 const registerUserHandler = async (req, res) => {
 
-  handleValidationErrors(req, res);
+    handleValidationErrors(req, res);
 
-  const { name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
-  try {
-    const newUser = await registerUser(name, email, password);
-    const token = generateToken(newUser.id);
+    try {
+        const newUser = await registerUser(name, email, password);
+        const token = generateToken(newUser.id);
 
-    res.json({ token });
-  } catch (err) {
+        res.json({ token });
+    } catch (err) {
 
-    console.log(err.message);
-    res.status(500).send('Server error');
-  }
+        console.log(err.message);
+        res.status(500).send('Server error');
+    }
 
 };
 
 
 const loginUserHandler = async (req, res) => {
 
-  handleValidationErrors(req, res);
+    handleValidationErrors(req, res);
 
-  const { email, password } = req.body;
+    const { email, password } = req.body;
 
-  try {
-    const user = await loginUser(email, password);
-    const token = generateToken(user.id);
+    try {
+        const user = await loginUser(email, password);
+        const token = generateToken(user.id);
 
-    res.json({ token });
-  } catch (err) {
+        res.json({ token });
+    } catch (err) {
 
-    console.log(err.message);
-    res.status(500).send('Server error');
-  }
+        console.log(err.message);
+        res.status(500).send('Server error');
+    }
+    
 };
-
 
 
 module.exports = { registerUserHandler, loginUserHandler };
