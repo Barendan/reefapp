@@ -23,7 +23,7 @@ const OrderForm = () => {
         customer_name: '',
         status: '',
         order_date: '', // non-editable
-        order_id: ''  // non-editable
+        id: ''  // non-editable
     });
 
 
@@ -34,7 +34,7 @@ const OrderForm = () => {
             
             if (order) {
                 setFormData({
-                    order_id: order.id,
+                    id: order.id,
                     customer_name: order.customer_name,
                     status: order.status,
                     order_date: order.order_date
@@ -74,7 +74,7 @@ const OrderForm = () => {
                 <Form>
                     <div>
                         <label>Order ID</label>
-                        <Field type="text" name="order_id" readOnly />
+                        <Field type="text" name="id" readOnly />
                     </div>
                     <div>
                         <label>Order Date</label>

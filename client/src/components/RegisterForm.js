@@ -35,7 +35,7 @@ const RegisterForm = () => {
 
             setTimeout(() => {
                 navigate('/')
-            }, 2000)
+            }, 1000)
         } catch (err) {
             console.log('Registration error:', err.response.data);
         }
@@ -70,6 +70,7 @@ const RegisterForm = () => {
                             <Field
                                 type="text"
                                 name="name"
+                                id="name"
                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <ErrorMessage
@@ -86,6 +87,7 @@ const RegisterForm = () => {
                             <Field
                                 type="email"
                                 name="email"
+                                id="email"
                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <ErrorMessage
@@ -102,6 +104,7 @@ const RegisterForm = () => {
                             <Field
                                 type="password"
                                 name="password"
+                                id="password"
                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             <ErrorMessage
