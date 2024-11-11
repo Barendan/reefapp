@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+
+CMD ["sh", "-c", "npm run migrate-seed && npm start"]
