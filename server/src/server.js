@@ -37,12 +37,20 @@ const startServer = async () => {
             console.log('Server running on port 5000');
         });
 
+
+        // unexpected server shutdown fix
+        server.on('error', (err) => {
+            console.log('Server error:', err);
+        });
+
         return server;
     } catch (err) {
         console.error('Unable to connect to the database:', err);
         process.exit(1);
     }
 };
+
+startServer();
 
 
 module.exports = { startServer, app };
