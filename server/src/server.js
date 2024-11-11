@@ -33,7 +33,7 @@ const startServer = async () => {
         await sequelize.authenticate();
         console.log('Database connected!');
 
-        const server = app.listen(5000, () => {
+        const server = app.listen(PORT, () => {
             console.log('Server running on port 5000');
         });
 
