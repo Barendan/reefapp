@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: './config/.env' });
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 
 const authMiddleware = (req, res, next) => {
@@ -18,7 +20,8 @@ const authMiddleware = (req, res, next) => {
     } catch (err) {
         res.status(401).json({ msg: 'Token is not valid' });
     }
-    
 };
+
+
 
 module.exports = authMiddleware;

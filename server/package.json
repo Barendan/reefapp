@@ -1,9 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon src/server.js",
+    "migrate": "npx sequelize-cli db:migrate --config config/config.js",
+    "migrate-undo": "npx sequelize-cli db:migrate:undo:all",
+    "seed": "npx sequelize-cli db:seed:all --config config/config.js",
+    "migrate-seed": "npx sequelize-cli db:migrate --config config/config.js && npx sequelize-cli db:seed:all --config config/config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,7 +22,10 @@
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.5",
+    "sequelize-cli": "^6.6.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
