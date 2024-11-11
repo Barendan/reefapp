@@ -1,0 +1,49 @@
+version: '3'
+
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://chosen_user:solidstate128@db:5432/testbase
+      - JWT_SECRET=supersecretkey
+    depends_on:
+      - db
+    command: ["sh", "-c", "npm run migrate-seed && npm start"]
+    restart: on-failure
+    networks:
+      - reef-network 
+
+  client:
+    build: ./client 
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - server
+    networks:
+      - reef-network
+
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: chosen_user
+      POSTGRES_PASSWORD: solidstate128
+      POSTGRES_DB: testbase
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - reef-network
+
+networks:
+  reef-network:
+    driver: bridge
+
+volumes:
+  pgdata:
